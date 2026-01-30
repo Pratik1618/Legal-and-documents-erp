@@ -57,8 +57,8 @@ export function InwardTable({ data, onView, onEdit, onDelete }: Props) {
 
                             <SelectItem value="all">ALL Dept</SelectItem>
                             <SelectItem value="HR">HR</SelectItem>
-                            <SelectItem value="Accounts">Accounts</SelectItem>
-                            <SelectItem value="Admin">Admin</SelectItem>
+                            <SelectItem value="ACCOUNTS">Accounts</SelectItem>
+                            <SelectItem value="ADMIN">Admin</SelectItem>
                         </SelectContent>
                     </Select>
                     {/* Example Department Filter */}

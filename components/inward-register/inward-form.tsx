@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { InwardRegister, InwardDocumentType } from "@/lib/types"
+import { InwardRegister, InwardDocumentType, InwardDeptType } from "@/lib/types"
 import { Card } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -10,6 +10,8 @@ import { Select, SelectItem, SelectContent, SelectTrigger, SelectValue } from "@
 
 const docTypes: InwardDocumentType[] = ["LETTER", "NOTICE", "AGREEMENT", "LICENSE", "INVOICE", "OTHER"]
 
+const deptTypes:InwardDeptType[] = ["ACCOUNTS",'ADMIN','BILLING','HR','OPERATIONS'
+]
 export function InwardForm({ initialData, onSubmit, onCancel }: any) {
     const [isSubmitting, setIsSubmitting] = useState(false)
   
@@ -69,7 +71,12 @@ export function InwardForm({ initialData, onSubmit, onCancel }: any) {
 
       <div>
           <Label htmlFor="department" className="text-sm font-medium text-foreground">Department</Label>
-          <Input value={form.department} onChange={e => handleChange("department", e.target.value)}  className="mt-2"/>
+         <Select value={form.department} onValueChange={(v) => handleChange("department", v)}>
+              <SelectTrigger className="mt-2"><SelectValue placeholder="Select department" /></SelectTrigger>
+              <SelectContent>
+                {deptTypes.map(t => <SelectItem key={t} value={t}>{t}</SelectItem>)}
+              </SelectContent>
+            </Select>
         </div>
   <div>
           <Label htmlFor="fowardToPerson"  className="text-sm font-medium text-foreground">Forward To Person</Label>

@@ -74,7 +74,7 @@ export const mockDocuments: ImportantDocument[] = [
 export const mockRegister :InwardRegister[]=[
   {
     department:"HR",
-    receivedDate:"26-02-2026",
+    receivedDate:"2026-01-10",
     receivingPerson:"pratik",
     forwardToPerson:"ops",
     documentType:"LETTER",

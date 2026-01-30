@@ -65,6 +65,12 @@ export type InwardDocumentType =
   | "INVOICE"
   | "OTHER"
 
+export type InwardDeptType =
+  | "HR"
+  | "ACCOUNTS"
+  | "BILLING"
+  | "OPERATIONS"
+  | "ADMIN"
 export interface InwardRegister {
   id: string
   documentType: InwardDocumentType

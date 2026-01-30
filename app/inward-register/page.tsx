@@ -6,9 +6,10 @@ import { InwardTable } from "@/components/inward-register/inward-table"
 import { InwardFormModal } from "@/components/inward-register/inward-form-modal"
 import { Button } from "@/components/ui/button"
 import { Plus } from "lucide-react"
+import { mockRegister } from "@/lib/mock-data"
 
 export default function InwardRegisterPage() {
-  const [data, setData] = useState<InwardRegister[]>([])
+  const [data, setData] = useState<InwardRegister[]>(mockRegister)
   const [openForm, setOpenForm] = useState(false)
   const [editing, setEditing] = useState<InwardRegister | null>(null)
 
