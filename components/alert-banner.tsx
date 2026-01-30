@@ -84,12 +84,12 @@ export function AlertBanner({
 
   return (
     <div className={`border rounded-lg p-4 flex items-start gap-4 ${getStyles()}`}>
-      <div className={`flex-shrink-0 ${getIconColor()}`}>{getIcon()}</div>
+      <div className={`shrink-0 ${getIconColor()}`}>{getIcon()}</div>
       <div className="flex-1">
         <h3 className={`font-semibold mb-1 ${getTextColor()}`}>{title}</h3>
         <p className={`text-sm ${getTextColor()} opacity-90`}>{message}</p>
       </div>
-      <Button variant="ghost" size="icon" onClick={onClose} className="flex-shrink-0">
+      <Button variant="ghost" size="icon" onClick={onClose} className="shrink-0">
         <X className="w-4 h-4" />
       </Button>
     </div>
