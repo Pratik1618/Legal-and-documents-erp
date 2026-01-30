@@ -56,3 +56,24 @@ export interface DashboardMetrics {
   openLegalNoticesCount: number
   highRiskCount: number
 }
+
+export type InwardDocumentType =
+  | "LETTER"
+  | "NOTICE"
+  | "AGREEMENT"
+  | "LICENSE"
+  | "INVOICE"
+  | "OTHER"
+
+export interface InwardRegister {
+  id: string
+  documentType: InwardDocumentType
+  receivedDate: string
+  receivingPerson: string
+  department: string
+  forwardToPerson: string
+  physicalFileNo: string
+  remarks?: string
+  createdAt: string
+  updatedAt: string
+}

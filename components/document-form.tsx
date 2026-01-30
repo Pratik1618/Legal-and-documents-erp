@@ -297,7 +297,7 @@ export function DocumentForm({ initialData, onSubmit, onCancel }: DocumentFormPr
           <Button type="button" variant="outline" onClick={onCancel} disabled={isSubmitting}>
             Cancel
           </Button>
-          <Button type="submit" disabled={isSubmitting}>
+         < Button type="submit" disabled={isSubmitting}>
             {isSubmitting ? "Saving..." : initialData ? "Update Document" : "Create Document"}
           </Button>
         </div>
