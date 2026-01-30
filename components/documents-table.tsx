@@ -51,7 +51,7 @@ export function DocumentsTable({ documents, onEdit, onDelete, onView }: Document
             onChange={(e) => setSearchTerm(e.target.value)}
             className="flex-1"
           />
-          <Select value={filterStatus} onValueChange={setFilterStatus}>
+          <Select value={filterStatus}  onValueChange={(value) => setFilterStatus(value as DocumentStatus | "all")}>
             <SelectTrigger className="w-full md:w-40">
               <SelectValue placeholder="Filter by Status" />
             </SelectTrigger>
@@ -62,7 +62,7 @@ export function DocumentsTable({ documents, onEdit, onDelete, onView }: Document
               <SelectItem value="Renewed">Renewed</SelectItem>
             </SelectContent>
           </Select>
-          <Select value={filterType} onValueChange={setFilterType}>
+          <Select value={filterType}  onValueChange={(value) => setFilterType(value as DocumentType | "all")}>
             <SelectTrigger className="w-full md:w-40">
               <SelectValue placeholder="Filter by Type" />
             </SelectTrigger>
