@@ -1,4 +1,4 @@
-import type { ImportantDocument, LegalNotice } from "./types"
+import type { ImportantDocument, InwardRegister, LegalNotice } from "./types"
 
 export const mockDocuments: ImportantDocument[] = [
   {
@@ -69,6 +69,21 @@ export const mockDocuments: ImportantDocument[] = [
     createdAt: "2024-02-01",
     updatedAt: "2024-12-15",
   },
+]
+
+export const mockRegister :InwardRegister[]=[
+  {
+    department:"HR",
+    receivedDate:"26-02-2026",
+    receivingPerson:"pratik",
+    forwardToPerson:"ops",
+    documentType:"LETTER",
+    physicalFileNo:"21",
+    id:"INR-001",
+    createdAt:"2024-11-25",
+    updatedAt:"2024-10-26"
+    
+  }
 ]
 
 export const mockLegalNotices: LegalNotice[] = [

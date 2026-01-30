@@ -4,14 +4,16 @@ import { useState } from "react"
 import { DashboardOverview } from "@/components/dashboard-overview"
 import { DocumentsTable } from "@/components/documents-table"
 import { LegalNoticesTable } from "@/components/legal-notices-table"
-import { mockDocuments, mockLegalNotices } from "@/lib/mock-data"
-import type { ImportantDocument, LegalNotice } from "@/lib/types"
+import { mockDocuments, mockLegalNotices, mockRegister } from "@/lib/mock-data"
+import { InwardRegister, type ImportantDocument, type LegalNotice } from "@/lib/types"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
+import { InwardTable } from "@/components/inward-register/inward-table"
 
 export default function Dashboard() {
   const [documents, setDocuments] = useState<ImportantDocument[]>(mockDocuments)
   const [legalNotices, setLegalNotices] = useState<LegalNotice[]>(mockLegalNotices)
+  const [InwardRegister, setInwardRegister] = useState<InwardRegister[]>(mockRegister)
 
   const handleDeleteDocument = (id: string) => {
     setDocuments(documents.filter((d) => d.id !== id))
@@ -41,13 +43,13 @@ export default function Dashboard() {
         </div>
         <DocumentsTable
           documents={documents.slice(0, 3)}
-          onEdit={() => {}}
+          onEdit={() => { }}
           onDelete={handleDeleteDocument}
-          onView={() => {}}
+          onView={() => { }}
         />
       </section>
 
-      <section>
+      <section className="mb-8">
         <div className="flex items-center justify-between mb-4">
           <h2 className="text-2xl font-bold text-foreground">Recent Legal Notices</h2>
           <Link href="/legal-notices">
@@ -56,9 +58,23 @@ export default function Dashboard() {
         </div>
         <LegalNoticesTable
           notices={legalNotices.slice(0, 3)}
-          onEdit={() => {}}
+          onEdit={() => { }}
           onDelete={handleDeleteNotice}
-          onView={() => {}}
+          onView={() => { }}
+        />
+      </section>
+      <section>
+        <div className="flex items-center justify-between mb-4">
+          <h2 className="text-2xl font-bold text-foreground">Recent Inward Register</h2>
+          <Link href="/inward-register">
+            <Button variant="outline">View All</Button>
+          </Link>
+        </div>
+        <InwardTable
+          data={InwardRegister.slice(0, 3)}
+          onEdit={() => { }}
+          onDelete={handleDeleteNotice}
+          onView={() => { }}
         />
       </section>
     </div>
