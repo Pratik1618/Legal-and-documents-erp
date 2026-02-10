@@ -9,7 +9,7 @@ import { useMemo, useState } from "react"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select"
 
 interface Props {
-    data: InwardRegister[]
+    data: InwardRegister[] 
     onView: (row: InwardRegister) => void
     onEdit: (row: InwardRegister) => void
     onDelete: (id: string) => void
