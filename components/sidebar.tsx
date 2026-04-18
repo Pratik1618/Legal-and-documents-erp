@@ -1,14 +1,15 @@
 "use client"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { FileText, Scale, LayoutDashboard, Menu, X, ChevronLeft, BookAudio } from "lucide-react"
+import { FileText, Scale, LayoutDashboard, Menu, X, ChevronLeft, BookAudio, Network } from "lucide-react"
 import { Button } from "@/components/ui/button"
 
 const menuItems = [
   { label: "Dashboard", href: "/", icon: LayoutDashboard },
   { label: "Documents", href: "/documents", icon: FileText },
   { label: "Legal Notices", href: "/legal-notices", icon: Scale },
-  {label:"Inward Register",href : "/inward-register",icon:BookAudio}
+  { label: "Inward Register", href: "/inward-register", icon: BookAudio },
+  { label: "Escalation Matrix", href: "/escalation-matrix", icon: Network },
 ]
 
 interface SidebarProps {

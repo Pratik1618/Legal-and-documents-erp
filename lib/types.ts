@@ -4,10 +4,11 @@ export type DocumentType = "CLRA" | "SHOP_ACT" | "ISO_CERT" | "PSARA" | "ELECTRI
 
 export type DocumentStatus = "Active" | "Expired" | "Renewed"
 export type LegalNoticeStage = "Open" | "Closed"
-export type ReplyType = "Own" | "Advocate" | "Consultant"
+export type ReplyType = "Own" | "Advocate" | "Consultant" | "Audit Body" | "Authority"
 
 export interface ImportantDocument {
   id: string
+  department: InwardDeptType
   documentType: DocumentType
   periodFrom: string
   periodTo: string
@@ -34,7 +35,7 @@ export interface LegalNoticeReply {
 export interface LegalNotice {
   id: string
   relatedDocumentId?: string
-  department: string
+  department: InwardDeptType
   subject: string
   inwardNumber: string
   inwardDate: string
@@ -71,6 +72,10 @@ export type InwardDeptType =
   | "BILLING"
   | "OPERATIONS"
   | "ADMIN"
+  | "LEGAL"
+  | "FINANCE"
+  | "QUALITY"
+  | "ENVIRONMENTAL"
 export interface InwardRegister {
   id: string
   documentType: InwardDocumentType
@@ -80,6 +85,22 @@ export interface InwardRegister {
   forwardToPerson: string
   physicalFileNo: string
   remarks?: string
+  createdAt: string
+  updatedAt: string
+}
+
+export interface EscalationLevelContact {
+  name: string
+  email: string
+}
+
+export interface EscalationMatrix {
+  id: string
+  department: InwardDeptType
+  l1: EscalationLevelContact
+  l2: EscalationLevelContact
+  l3: EscalationLevelContact
+  l4: EscalationLevelContact
   createdAt: string
   updatedAt: string
 }

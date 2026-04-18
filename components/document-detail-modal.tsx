@@ -67,6 +67,10 @@ export function DocumentDetailModal({ document, isOpen, onClose }: DocumentDetai
             <h3 className="font-semibold text-foreground mb-4">Document Details</h3>
             <div className="grid grid-cols-2 gap-4">
               <div>
+                <p className="text-xs text-muted-foreground">Department</p>
+                <p className="text-sm font-medium text-foreground">{document.department}</p>
+              </div>
+              <div>
                 <p className="text-xs text-muted-foreground">Period From</p>
                 <p className="text-sm font-medium text-foreground">
                   {new Date(document.periodFrom).toLocaleDateString()}

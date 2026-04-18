@@ -2,8 +2,8 @@
 
 import type React from "react"
 
-import { useState } from "react"
-import type { LegalNotice, LegalNoticeReply } from "@/lib/types"
+import { useEffect, useState } from "react"
+import type { InwardDeptType, LegalNotice, LegalNoticeReply } from "@/lib/types"
 import { validateLegalNotice } from "@/lib/validation"
 import { Card } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
@@ -13,6 +13,19 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Alert, AlertDescription } from "@/components/ui/alert"
 import { AlertCircle, Plus, Trash2 } from "lucide-react"
 import { Textarea } from "@/components/ui/textarea"
+import { getEscalationMatrixByDepartment } from "@/lib/escalation-matrix-storage"
+
+const departmentOptions: InwardDeptType[] = [
+  "ACCOUNTS",
+  "ADMIN",
+  "BILLING",
+  "HR",
+  "OPERATIONS",
+  "LEGAL",
+  "FINANCE",
+  "QUALITY",
+  "ENVIRONMENTAL",
+]
 
 interface LegalNoticeFormProps {
   initialData?: LegalNotice
@@ -24,7 +37,7 @@ export function LegalNoticeForm({ initialData, onSubmit, onCancel }: LegalNotice
   const [formData, setFormData] = useState(
     initialData || {
       id: "",
-      department: "",
+      department: "HR" as InwardDeptType,
       subject: "",
       inwardNumber: "",
       inwardDate: "",
@@ -44,6 +57,7 @@ export function LegalNoticeForm({ initialData, onSubmit, onCancel }: LegalNotice
 
   const [errors, setErrors] = useState<Record<string, string>>({})
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const [matrixNotice, setMatrixNotice] = useState("")
 
   const handleChange = (field: string, value: any) => {
     setFormData((prev) => ({ ...prev, [field]: value }))
@@ -55,6 +69,27 @@ export function LegalNoticeForm({ initialData, onSubmit, onCancel }: LegalNotice
       })
     }
   }
+
+  useEffect(() => {
+    const matrix = getEscalationMatrixByDepartment(formData.department as InwardDeptType)
+
+    if (!matrix) {
+      setMatrixNotice(`No common escalation matrix found for ${formData.department}.`)
+      setFormData((prev) => ({
+        ...prev,
+        escalationL1: "",
+        escalationL2: "",
+      }))
+      return
+    }
+
+    setMatrixNotice(`Escalation levels are auto-filled from the common matrix for ${formData.department}.`)
+    setFormData((prev) => ({
+      ...prev,
+      escalationL1: matrix.l1.name,
+      escalationL2: matrix.l2.name,
+    }))
+  }, [formData.department])
 
   const addReply = () => {
     const newReply: LegalNoticeReply = {
@@ -128,13 +163,18 @@ export function LegalNoticeForm({ initialData, onSubmit, onCancel }: LegalNotice
             <Label htmlFor="department" className="text-sm font-medium text-foreground">
               Department
             </Label>
-            <Input
-              type="text"
-              value={formData.department}
-              onChange={(e) => handleChange("department", e.target.value)}
-              placeholder="HR"
-              className="mt-2"
-            />
+            <Select value={formData.department} onValueChange={(val: InwardDeptType) => handleChange("department", val)}>
+              <SelectTrigger className="mt-2">
+                <SelectValue placeholder="Select department" />
+              </SelectTrigger>
+              <SelectContent>
+                {departmentOptions.map((department) => (
+                  <SelectItem key={department} value={department}>
+                    {department}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
             {errors.department && <p className="text-xs text-destructive mt-1">{errors.department}</p>}
           </div>
 
@@ -242,6 +282,10 @@ export function LegalNoticeForm({ initialData, onSubmit, onCancel }: LegalNotice
             />
           </div>
 
+          <div className="md:col-span-2 rounded-lg border border-border bg-muted/20 p-4">
+            <p className="text-sm text-muted-foreground">{matrixNotice}</p>
+          </div>
+
           {/* Escalation L1 */}
           <div>
             <Label htmlFor="escalationL1" className="text-sm font-medium text-foreground">
@@ -250,8 +294,8 @@ export function LegalNoticeForm({ initialData, onSubmit, onCancel }: LegalNotice
             <Input
               type="text"
               value={formData.escalationL1}
-              onChange={(e) => handleChange("escalationL1", e.target.value)}
-              placeholder="Manager"
+              readOnly
+              placeholder="Auto-filled from matrix"
               className="mt-2"
             />
             {errors.escalationL1 && <p className="text-xs text-destructive mt-1">{errors.escalationL1}</p>}
@@ -265,8 +309,8 @@ export function LegalNoticeForm({ initialData, onSubmit, onCancel }: LegalNotice
             <Input
               type="text"
               value={formData.escalationL2}
-              onChange={(e) => handleChange("escalationL2", e.target.value)}
-              placeholder="Director"
+              readOnly
+              placeholder="Auto-filled from matrix"
               className="mt-2"
             />
             {errors.escalationL2 && <p className="text-xs text-destructive mt-1">{errors.escalationL2}</p>}
@@ -340,6 +384,8 @@ export function LegalNoticeForm({ initialData, onSubmit, onCancel }: LegalNotice
                           <SelectItem value="Own">Own</SelectItem>
                           <SelectItem value="Advocate">Advocate</SelectItem>
                           <SelectItem value="Consultant">Consultant</SelectItem>
+                          <SelectItem value="Audit Body">Audit Body</SelectItem>
+                          <SelectItem value="Authority">Authority</SelectItem>
                         </SelectContent>
                       </Select>
                     </div>

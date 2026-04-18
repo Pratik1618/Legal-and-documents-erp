@@ -6,6 +6,10 @@ export interface ValidationError {
 export function validateDocument(data: Record<string, any>): ValidationError[] {
   const errors: ValidationError[] = []
 
+  if (!data.department?.trim()) {
+    errors.push({ field: "department", message: "Department is required" })
+  }
+
   if (!data.documentType?.trim()) {
     errors.push({ field: "documentType", message: "Document type is required" })
   }

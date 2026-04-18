@@ -2,8 +2,8 @@
 
 import type React from "react"
 
-import { useState } from "react"
-import type { ImportantDocument, DocumentType, DocumentStatus } from "@/lib/types"
+import { useEffect, useState } from "react"
+import type { ImportantDocument, DocumentType, DocumentStatus, InwardDeptType } from "@/lib/types"
 import { validateDocument } from "@/lib/validation"
 import { Card } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
@@ -12,6 +12,7 @@ import { Label } from "@/components/ui/label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Alert, AlertDescription } from "@/components/ui/alert"
 import { AlertCircle } from "lucide-react"
+import { getEscalationMatrixByDepartment } from "@/lib/escalation-matrix-storage"
 
 const documentTypeOptions: { value: DocumentType; label: string }[] = [
   { value: "CLRA", label: "Contract Labour License" },
@@ -27,6 +28,18 @@ const statusOptions: { value: DocumentStatus; label: string }[] = [
   { value: "Renewed", label: "Renewed" },
 ]
 
+const departmentOptions: InwardDeptType[] = [
+  "ACCOUNTS",
+  "ADMIN",
+  "BILLING",
+  "HR",
+  "OPERATIONS",
+  "LEGAL",
+  "FINANCE",
+  "QUALITY",
+  "ENVIRONMENTAL",
+]
+
 interface DocumentFormProps {
   initialData?: ImportantDocument
   onSubmit: (data: ImportantDocument) => void
@@ -37,6 +50,7 @@ export function DocumentForm({ initialData, onSubmit, onCancel }: DocumentFormPr
   const [formData, setFormData] = useState(
     initialData || {
       id: "",
+      department: "HR" as InwardDeptType,
       documentType: "" as DocumentType,
       periodFrom: "",
       periodTo: "",
@@ -56,6 +70,7 @@ export function DocumentForm({ initialData, onSubmit, onCancel }: DocumentFormPr
 
   const [errors, setErrors] = useState<Record<string, string>>({})
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const [matrixNotice, setMatrixNotice] = useState("")
 
   const handleChange = (field: string, value: any) => {
     setFormData((prev) => ({ ...prev, [field]: value }))
@@ -67,6 +82,29 @@ export function DocumentForm({ initialData, onSubmit, onCancel }: DocumentFormPr
       })
     }
   }
+
+  useEffect(() => {
+    const matrix = getEscalationMatrixByDepartment(formData.department)
+
+    if (!matrix) {
+      setMatrixNotice(`No common escalation matrix found for ${formData.department}.`)
+      setFormData((prev) => ({
+        ...prev,
+        escalationL1: "",
+        escalationL2: "",
+        escalationL3: "",
+      }))
+      return
+    }
+
+    setMatrixNotice(`Escalation levels are auto-filled from the common matrix for ${formData.department}.`)
+    setFormData((prev) => ({
+      ...prev,
+      escalationL1: matrix.l1.name,
+      escalationL2: matrix.l2.name,
+      escalationL3: matrix.l3.name,
+    }))
+  }, [formData.department])
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -107,6 +145,25 @@ export function DocumentForm({ initialData, onSubmit, onCancel }: DocumentFormPr
         )}
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div>
+            <Label htmlFor="department" className="text-sm font-medium text-foreground">
+              Department
+            </Label>
+            <Select value={formData.department} onValueChange={(val: InwardDeptType) => handleChange("department", val)}>
+              <SelectTrigger className="mt-2">
+                <SelectValue placeholder="Select department" />
+              </SelectTrigger>
+              <SelectContent>
+                {departmentOptions.map((department) => (
+                  <SelectItem key={department} value={department}>
+                    {department}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+            {errors.department && <p className="text-xs text-destructive mt-1">{errors.department}</p>}
+          </div>
+
           {/* Document Type */}
           <div>
             <Label htmlFor="documentType" className="text-sm font-medium text-foreground">
@@ -232,6 +289,10 @@ export function DocumentForm({ initialData, onSubmit, onCancel }: DocumentFormPr
             {errors.responsiblePerson && <p className="text-xs text-destructive mt-1">{errors.responsiblePerson}</p>}
           </div>
 
+          <div className="md:col-span-2 rounded-lg border border-border bg-muted/20 p-4">
+            <p className="text-sm text-muted-foreground">{matrixNotice}</p>
+          </div>
+
           {/* Escalation L1 */}
           <div>
             <Label htmlFor="escalationL1" className="text-sm font-medium text-foreground">
@@ -240,8 +301,8 @@ export function DocumentForm({ initialData, onSubmit, onCancel }: DocumentFormPr
             <Input
               type="text"
               value={formData.escalationL1}
-              onChange={(e) => handleChange("escalationL1", e.target.value)}
-              placeholder="Manager"
+              readOnly
+              placeholder="Auto-filled from matrix"
               className="mt-2"
             />
             {errors.escalationL1 && <p className="text-xs text-destructive mt-1">{errors.escalationL1}</p>}
@@ -255,8 +316,8 @@ export function DocumentForm({ initialData, onSubmit, onCancel }: DocumentFormPr
             <Input
               type="text"
               value={formData.escalationL2}
-              onChange={(e) => handleChange("escalationL2", e.target.value)}
-              placeholder="Director"
+              readOnly
+              placeholder="Auto-filled from matrix"
               className="mt-2"
             />
             {errors.escalationL2 && <p className="text-xs text-destructive mt-1">{errors.escalationL2}</p>}
@@ -270,8 +331,8 @@ export function DocumentForm({ initialData, onSubmit, onCancel }: DocumentFormPr
             <Input
               type="text"
               value={formData.escalationL3}
-              onChange={(e) => handleChange("escalationL3", e.target.value)}
-              placeholder="Executive"
+              readOnly
+              placeholder="Auto-filled from matrix"
               className="mt-2"
             />
             {errors.escalationL3 && <p className="text-xs text-destructive mt-1">{errors.escalationL3}</p>}

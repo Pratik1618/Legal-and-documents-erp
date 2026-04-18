@@ -1,8 +1,9 @@
-import type { ImportantDocument, InwardRegister, LegalNotice } from "./types"
+import type { EscalationMatrix, ImportantDocument, InwardRegister, LegalNotice } from "./types"
 
 export const mockDocuments: ImportantDocument[] = [
   {
     id: "DOC-001",
+    department: "HR",
     documentType: "CLRA",
     periodFrom: "2023-01-15",
     periodTo: "2025-01-14",
@@ -20,6 +21,7 @@ export const mockDocuments: ImportantDocument[] = [
   },
   {
     id: "DOC-002",
+    department: "OPERATIONS",
     documentType: "ISO_CERT",
     periodFrom: "2022-06-10",
     periodTo: "2025-06-09",
@@ -37,6 +39,7 @@ export const mockDocuments: ImportantDocument[] = [
   },
   {
     id: "DOC-003",
+    department: "ADMIN",
     documentType: "SHOP_ACT",
     periodFrom: "2020-03-20",
     periodTo: "2025-03-19",
@@ -54,6 +57,7 @@ export const mockDocuments: ImportantDocument[] = [
   },
   {
     id: "DOC-004",
+    department: "OPERATIONS",
     documentType: "ELECTRICAL",
     periodFrom: "2024-02-01",
     periodTo: "2025-01-31",
@@ -86,6 +90,99 @@ export const mockRegister :InwardRegister[]=[
   }
 ]
 
+export const mockEscalationMatrix: EscalationMatrix[] = [
+  {
+    id: "ESC-001",
+    department: "HR",
+    l1: { name: "Priya Sharma", email: "priya.sharma@company.com" },
+    l2: { name: "Rohit Mehta", email: "rohit.mehta@company.com" },
+    l3: { name: "Anita Kapoor", email: "anita.kapoor@company.com" },
+    l4: { name: "Vikram Singh", email: "vikram.singh@company.com" },
+    createdAt: "2026-01-10T09:00:00.000Z",
+    updatedAt: "2026-01-10T09:00:00.000Z",
+  },
+  {
+    id: "ESC-002",
+    department: "OPERATIONS",
+    l1: { name: "Arjun Rao", email: "arjun.rao@company.com" },
+    l2: { name: "Neha Iyer", email: "neha.iyer@company.com" },
+    l3: { name: "Sandeep Nair", email: "sandeep.nair@company.com" },
+    l4: { name: "Karan Malhotra", email: "karan.malhotra@company.com" },
+    createdAt: "2026-01-10T09:00:00.000Z",
+    updatedAt: "2026-01-10T09:00:00.000Z",
+  },
+  {
+    id: "ESC-003",
+    department: "ADMIN",
+    l1: { name: "Meera Joshi", email: "meera.joshi@company.com" },
+    l2: { name: "Amit Verma", email: "amit.verma@company.com" },
+    l3: { name: "Pooja Sethi", email: "pooja.sethi@company.com" },
+    l4: { name: "Rakesh Gupta", email: "rakesh.gupta@company.com" },
+    createdAt: "2026-01-10T09:00:00.000Z",
+    updatedAt: "2026-01-10T09:00:00.000Z",
+  },
+  {
+    id: "ESC-004",
+    department: "ACCOUNTS",
+    l1: { name: "Nitin Shah", email: "nitin.shah@company.com" },
+    l2: { name: "Komal Patel", email: "komal.patel@company.com" },
+    l3: { name: "Deepak Arora", email: "deepak.arora@company.com" },
+    l4: { name: "Ritu Bansal", email: "ritu.bansal@company.com" },
+    createdAt: "2026-01-10T09:00:00.000Z",
+    updatedAt: "2026-01-10T09:00:00.000Z",
+  },
+  {
+    id: "ESC-005",
+    department: "BILLING",
+    l1: { name: "Sonal Jain", email: "sonal.jain@company.com" },
+    l2: { name: "Harsh Kulkarni", email: "harsh.kulkarni@company.com" },
+    l3: { name: "Devika Roy", email: "devika.roy@company.com" },
+    l4: { name: "Manish Tandon", email: "manish.tandon@company.com" },
+    createdAt: "2026-01-10T09:00:00.000Z",
+    updatedAt: "2026-01-10T09:00:00.000Z",
+  },
+  {
+    id: "ESC-006",
+    department: "LEGAL",
+    l1: { name: "Radhika Sen", email: "radhika.sen@company.com" },
+    l2: { name: "Alok Deshmukh", email: "alok.deshmukh@company.com" },
+    l3: { name: "Shweta Chopra", email: "shweta.chopra@company.com" },
+    l4: { name: "Gaurav Khanna", email: "gaurav.khanna@company.com" },
+    createdAt: "2026-01-10T09:00:00.000Z",
+    updatedAt: "2026-01-10T09:00:00.000Z",
+  },
+  {
+    id: "ESC-007",
+    department: "FINANCE",
+    l1: { name: "Pankaj Mittal", email: "pankaj.mittal@company.com" },
+    l2: { name: "Seema Nanda", email: "seema.nanda@company.com" },
+    l3: { name: "Naveen Suri", email: "naveen.suri@company.com" },
+    l4: { name: "Tina Ahuja", email: "tina.ahuja@company.com" },
+    createdAt: "2026-01-10T09:00:00.000Z",
+    updatedAt: "2026-01-10T09:00:00.000Z",
+  },
+  {
+    id: "ESC-008",
+    department: "QUALITY",
+    l1: { name: "Farah Ali", email: "farah.ali@company.com" },
+    l2: { name: "Keshav Bhatia", email: "keshav.bhatia@company.com" },
+    l3: { name: "Ishita Dey", email: "ishita.dey@company.com" },
+    l4: { name: "Rohan Chawla", email: "rohan.chawla@company.com" },
+    createdAt: "2026-01-10T09:00:00.000Z",
+    updatedAt: "2026-01-10T09:00:00.000Z",
+  },
+  {
+    id: "ESC-009",
+    department: "ENVIRONMENTAL",
+    l1: { name: "Leena Bose", email: "leena.bose@company.com" },
+    l2: { name: "Vivek Saran", email: "vivek.saran@company.com" },
+    l3: { name: "Asha Menon", email: "asha.menon@company.com" },
+    l4: { name: "Pranav Oberoi", email: "pranav.oberoi@company.com" },
+    createdAt: "2026-01-10T09:00:00.000Z",
+    updatedAt: "2026-01-10T09:00:00.000Z",
+  },
+]
+
 export const mockLegalNotices: LegalNotice[] = [
   {
     id: "LN-001",
@@ -115,7 +212,7 @@ export const mockLegalNotices: LegalNotice[] = [
   },
   {
     id: "LN-002",
-    department: "Legal",
+    department: "LEGAL",
     subject: "Tax Notice - FY 2023-24",
     inwardNumber: "IN-LN-2024-002",
     inwardDate: "2024-10-15",
@@ -146,8 +243,8 @@ export const mockLegalNotices: LegalNotice[] = [
   },
   {
     id: "LN-003",
+    department: "OPERATIONS",
     relatedDocumentId: "DOC-003",
-    department: "Operations",
     subject: "Shop Act Violation Notice",
     inwardNumber: "IN-LN-2024-003",
     inwardDate: "2024-09-01",
@@ -178,7 +275,7 @@ export const mockLegalNotices: LegalNotice[] = [
   },
   {
     id: "LN-004",
-    department: "Finance",
+    department: "FINANCE",
     subject: "Labor Law Compliance - Minimum Wage Adjustment",
     inwardNumber: "IN-LN-2024-004",
     inwardDate: "2024-12-01",
@@ -203,8 +300,8 @@ export const mockLegalNotices: LegalNotice[] = [
   },
   {
     id: "LN-005",
+    department: "QUALITY",
     relatedDocumentId: "DOC-002",
-    department: "Quality",
     subject: "ISO Certification - Audit Finding Review",
     inwardNumber: "IN-LN-2024-005",
     inwardDate: "2024-11-10",
@@ -241,7 +338,7 @@ export const mockLegalNotices: LegalNotice[] = [
   },
   {
     id: "LN-006",
-    department: "Environmental",
+    department: "ENVIRONMENTAL",
     subject: "Environmental Compliance - Waste Management",
     inwardNumber: "IN-LN-2024-006",
     inwardDate: "2024-08-15",

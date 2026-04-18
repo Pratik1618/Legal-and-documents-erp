@@ -25,9 +25,15 @@ export default function InwardRegisterPage() {
 
   return (
     <div className="p-6">
-      <div className="flex justify-between mb-6">
-        <h1 className="text-2xl font-bold">Inward Register</h1>
-        <Button onClick={()=>setOpenForm(true)} className="gap-2">
+      <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between mb-6">
+        <div>
+          <h1 className="text-2xl font-bold">Inward Register</h1>
+          <p className="text-sm text-muted-foreground mt-1">
+            Manage inward entries received across departments.
+          </p>
+        </div>
+
+        <Button onClick={() => setOpenForm(true)} className="gap-2">
           <Plus className="w-4 h-4" /> Add Inward
         </Button>
       </div>
